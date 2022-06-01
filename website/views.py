@@ -41,11 +41,8 @@ def cv2_to_str(cv2_img):
 def face_recognition():
 	if request.method == "POST":
 		# request for file
-		print("blbl")
 		pic = request.files['pic']
-		print("blbl")
 		if not pic:
-			print("pic is null")
 			flash("Image not valid.", category="error")
 			return render_template("face_recognition.html", page=1)
 
@@ -53,14 +50,13 @@ def face_recognition():
 		filename = secure_filename(pic.filename)
 		mimetype = pic.mimetype
 		if not filename or not mimetype or (mimetype != "image/jpeg" and mimetype != "image/png"):
-			print("mimetype is null")
 			flash("Type image not valid.", category="error")
 			return render_template("face_recognition.html", page=1)
-		print("blbl")
 
 		# str to cv2
 		img = pic.read()
-		img = np.fromstring(img, np.uint8)
+		# img = np.fromstring(img, np.uint8)
+		img = np.frombuffer(img, np.uint8)
 		img = cv2.imdecode(img, 1)
 
 		# resize
